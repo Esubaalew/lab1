@@ -1,0 +1,24 @@
+# Ignore LaTeX build files
+*.aux
+*.log
+*.out
+*.toc
+*.gz
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.pdf
+
+# Ignore Octave/MATLAB output images (if not needed in repo)
+images/out/*
+
+# Ignore other temporary files
+*.tmp
+*.bak
+.DS_Store
+
+# Ignore markdown and report artifacts
+REPORT.md
+
+# Ignore any other user-specific or editor files
+.vscode/

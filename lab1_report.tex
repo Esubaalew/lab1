@@ -1,0 +1,247 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{float}
+
+\title{Report for Lab 1\\
+Computer Vision Course\\
+MSc in Artificial Intelligence}
+\author{Esubalew Chekol\\
+GSR/6451/17}
+\date{August 28, 2025}
+
+\begin{document}
+
+\maketitle
+
+\section*{Introduction}
+This report summarizes the implementation and results of basic image processing tasks using MATLAB. The tasks are divided into two main sections: grayscale image sampling and quantization (Task 1), and color image processing (Task 2). The images used are \texttt{trees.jpeg} and \texttt{peppers.jpeg}.
+
+\section*{Task 1: Grayscale Image Sampling and Quantization}
+
+\subsection*{1. Displaying the Original Image}
+\textbf{Script:} \texttt{task1\_display.m}
+
+Reads and displays the original grayscale image (\texttt{trees.jpeg}).
+
+% Code
+\begin{verbatim}
+img = imread('images/trees.jpeg');
+imshow(img);
+title('Original Image');
+\end{verbatim}
+
+% Image
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/original_trees.jpeg}
+    \caption{Original Grayscale Image}
+\end{figure}
+
+\subsection*{2. Image Sampling}
+\textbf{Script:} \texttt{task1\_sampling.m}, \texttt{task1\_downsampling.m}
+
+Samples the image by factors of 2 and 4, reducing its resolution.
+
+% Code
+\begin{verbatim}
+% Factor 2
+sampled_img = img(1:2:end, 1:2:end);
+imshow(sampled_img);
+title('Sampled Image - Factor 2');
+
+% Factor 4
+sampled_img_4 = img(1:4:end, 1:4:end);
+imshow(sampled_img_4);
+title('Sampled Image - Factor 4');
+\end{verbatim}
+
+% Images (replace placeholders with actual output)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/sampled_trees.jpeg}
+    \caption{Sampled Image - Factor 2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/sampled4_trees.jpeg}
+    \caption{Sampled Image - Factor 4}
+\end{figure}
+
+\subsection*{3. Image Quantization}
+\textbf{Script:} \texttt{task1\_quantization.m}
+
+Reduces the number of gray levels to 4.
+
+% Code
+\begin{verbatim}
+quant_img = uint8(floor(double(img)/64) * 128);
+imshow(quant_img);
+title('Quantized Image - 4 Gray Levels');
+\end{verbatim}
+
+% Image (quantization)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/quantized_trees.jpeg}
+    \caption{Quantized Image - 4 Gray Levels}
+\end{figure}
+
+\subsection*{4. Binary Conversion}
+\textbf{Script:} \texttt{task1\_gray\_2.m}
+
+Converts the image to binary using a threshold of 128.
+
+% Code
+\begin{verbatim}
+binary_img = uint8(img > 128) * 255;
+imshow(binary_img);
+title('Binary Image (Threshold at 128)');
+\end{verbatim}
+
+% Image (binary)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/binary_trees.jpeg}
+    \caption{Binary Image (Threshold at 128)}
+\end{figure}
+
+\subsection*{5. Cascaded Sampling and Quantization}
+\textbf{Script:} \texttt{task1\_cascade.m}
+
+Applies sampling and quantization sequentially.
+
+% Code
+\begin{verbatim}
+cascaded_img = img(1:2:end, 1:2:end);
+cascaded_img = uint8(floor(double(cascaded_img)/64) * 64);
+imshow(cascaded_img);
+title('Sampled and Quantized Image');
+\end{verbatim}
+
+% Image (cascade)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/cascaded_trees.jpeg}
+    \caption{Sampled and Quantized Image}
+\end{figure}
+
+\section*{Task 2: Color Image Processing}
+
+\subsection*{1. Displaying the Original Color Image}
+\textbf{Script:} \texttt{task2\_original.m}
+
+Reads and displays the original color image (\texttt{peppers.jpeg}).
+
+% Code
+\begin{verbatim}
+color_img = imread('images/peppers.jpeg');
+imshow(color_img);
+title('Original Color Image');
+\end{verbatim}
+
+% Image (color original)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/original_peppers.jpeg}
+    \caption{Original Color Image}
+\end{figure}
+
+\subsection*{2. Brightness Adjustment}
+\textbf{Script:} \texttt{task2\_brightness.m}
+
+Decreases the brightness of the image.
+
+% Code
+\begin{verbatim}
+bright_img = color_img - 50;
+imshow(bright_img);
+title('Brightness Decreased');
+\end{verbatim}
+
+% Image (brightness)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/brightness_peppers.jpeg}
+    \caption{Brightness Decreased}
+\end{figure}
+
+\subsection*{3. Contrast Stretching}
+\textbf{Script:} \texttt{task2\_contrast.m}
+
+Stretches the contrast of the image using \texttt{imadjust}.
+
+% Code
+\begin{verbatim}
+double_img = im2double(color_img);
+contrast_img = imadjust(double_img, stretchlim(double_img), []);
+imshow(contrast_img);
+title('Contrast Stretched Image');
+\end{verbatim}
+
+% Image (contrast)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/contrast_peppers.jpeg}
+    \caption{Contrast Stretched Image}
+\end{figure}
+
+\subsection*{4. Negative Image}
+\textbf{Script:} \texttt{task2\_negative.m}
+
+Computes the negative of the image.
+
+% Code
+\begin{verbatim}
+negative_img = 255 - color_img;
+imshow(negative_img);
+title('Negative Image');
+\end{verbatim}
+
+% Image (negative)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/out/negative_peppers.jpeg}
+    \caption{Negative Image}
+\end{figure}
+
+\subsection*{5. RGB Channel Separation}
+\textbf{Script:} \texttt{task2\_rgb.m}
+
+Separates and displays the Red, Green, and Blue channels.
+
+% Code
+\begin{verbatim}
+R = color_img(:,:,1);
+G = color_img(:,:,2);
+B = color_img(:,:,3);
+
+subplot(1,3,1); imshow(R); title('Red Channel');
+subplot(1,3,2); imshow(G); title('Green Channel');
+subplot(1,3,3); imshow(B); title('Blue Channel');
+\end{verbatim}
+
+% Images (RGB channels)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/out/red_peppers.jpeg}
+    \caption{Red Channel}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/out/green_peppers.jpeg}
+    \caption{Green Channel}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{images/out/blue_peppers.jpeg}
+    \caption{Blue Channel}
+\end{figure}
+
+\section*{Conclusion}
+This lab provided hands-on experience with fundamental image processing techniques in MATLAB. The tasks covered essential operations such as sampling, quantization, brightness/contrast adjustment, and color channel manipulation, forming a strong foundation for further studies in computer vision.
+
+\end{document}
