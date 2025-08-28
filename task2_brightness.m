@@ -1,4 +1,4 @@
-color_img = imread('/Users/esubalew/Computer-Vision-Lab2/test-images/peppers.jpeg');
+color_img = imread('images/peppers.jpeg');
 
 
 bright_img = color_img - 50;

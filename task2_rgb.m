@@ -1,4 +1,4 @@
-color_img = imread('/Users/esubalew/Computer-Vision-Lab2/test-images/peppers.jpeg');
+color_img = imread('images/peppers.jpeg');
 
 R = color_img(:,:,1);
 G = color_img(:,:,2);
